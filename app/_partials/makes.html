@@ -18,4 +18,10 @@
   wmp-spinner-timeout="5000">
 </wmp-spinner>
 
-<wmp-makes-list>
+<wmp-makes-list></wmp-makes-list>
+
+<wmp-paginator
+  ng-show="makes"
+  wmp-paginator-current-page="currentPage"
+  wmp-paginator-total-pages="totalPages">
+</wmp-paginator>

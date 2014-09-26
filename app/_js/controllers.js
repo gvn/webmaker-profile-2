@@ -87,23 +87,34 @@ angular.module('wmProfile.controllers', [])
     function ($scope, $rootScope, makeapi) {
       $scope.viewID = 'makes';
       $scope.didServiceFail = false;
+      $scope.currentPage = 0;
+      $scope.totalPages = undefined;
 
-      makeapi
-        .getRemixCounts()
-        .user($rootScope.WMP.username)
-        .then(function success (err, makes) {
-          if (err) {
-            console.error(err);
+      $scope.getPage = function (page) {
+        makeapi
+          .getRemixCounts()
+          .user($rootScope.WMP.username)
+          .page(page)
+          .then(function success (err, makes, total) {
+            if (err) {
+              console.error(err);
+              $scope.didServiceFail = true;
+            }
+
+            $scope.totalPages = Math.ceil(total / 10);
+
+            makes = makeapi.massage(makes);
+
+            $scope.makes = makes;
+            $scope.$apply();
+          }, function fail (error) {
             $scope.didServiceFail = true;
-          }
+          });
+      }
 
-          makes = makeapi.massage(makes);
-
-          $scope.makes = makes;
-          $scope.$apply();
-        }, function fail (error) {
-          $scope.didServiceFail = true;
-        });
+      $scope.$watch('currentPage', function (newValue, oldValue) {
+        $scope.getPage(newValue + 1);
+      });
     }
   ])
   .controller('likes', ['$scope', '$rootScope', 'makeapi',

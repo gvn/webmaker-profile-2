@@ -12,6 +12,29 @@ angular.module('wmProfile.directives', [])
       }
     };
   })
+  .directive('wmpPaginator', [function () {
+    return {
+      restrict: 'E',
+      scope: {
+        currentPage: '=wmpPaginatorCurrentPage',
+        totalPages: '=wmpPaginatorTotalPages'
+      },
+      templateUrl: '/user/_partials/paginator.html',
+      link: function ($scope, el, attrs) {
+        $scope.nextPage = function () {
+          if ($scope.currentPage < $scope.totalPages - 1) {
+            $scope.currentPage++;
+          }
+        };
+
+        $scope.previousPage = function () {
+          if ($scope.currentPage > 0) {
+            $scope.currentPage--;
+          }
+        };
+      }
+    };
+  }])
   .directive('wmpLogin', ['WebmakerAuthClient', 'loginService',
     function (WebmakerAuthClient, loginService) {
       return {

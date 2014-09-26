@@ -1,0 +1,6 @@
+<div class="clearfix">
+  <button class="btn btn-primary pull-left" ng-click="previousPage()" ng-show="currentPage !== 0"><i class="fa fa-chevron-left"></i></button>
+  <button class="btn btn-primary pull-right" ng-click="nextPage()" ng-show="currentPage < totalPages - 1"><i class="fa fa-chevron-right"></i></button>
+</div>
+
+<p class="text-center"><strong>{{ currentPage + 1 }}</strong> / {{ totalPages }}</p>
